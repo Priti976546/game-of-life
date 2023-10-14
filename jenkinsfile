@@ -7,16 +7,15 @@ customWorkspace ' /home/ec2-user '
         stage('checkout') {
             steps {
                sh'''
-               git clone 
-                cd /home/ec2-user
+               git clone https://github.com/Priti976546/game-of-life.git
+                cd game-of-life
                '''
          } 
         } 
-    stages {
         stage('Build') {
             steps {
                sh'''
-               cd game-of-life
+               cd /home/ec2-user/game-of-life
                mvn clean install
                '''
          } 
@@ -25,7 +24,7 @@ customWorkspace ' /home/ec2-user '
           stage('Deploy') {
                 steps {
                 sh'''
-                   scp game-of-life/gameoflife-web/target/gameoflife.war /mnt/apache-tomcat-9.0.80/webapps/
+                   cp game-of-life/gameoflife-web/target/gameoflife.war /mnt/apache-tomcat-9.0.80/webapps/
                 '''
      
              }
