@@ -1,11 +1,22 @@
 pipeline {
-    agent any
+    agent { node { label ' built-in ' } 
+customWorkspace ' /home/ec2-user ' 
+}
 
-    
+   stages {
+        stage('checkout') {
+            steps {
+               sh'''
+               git clone 
+                cd /home/ec2-user
+               '''
+         } 
+        } 
     stages {
         stage('Build') {
             steps {
                sh'''
+               cd game-of-life
                mvn clean install
                '''
          } 
@@ -14,7 +25,7 @@ pipeline {
           stage('Deploy') {
                 steps {
                 sh'''
-                   scp /mnt/Project/gameoflife-web/target/gameoflife.war /mnt/apache-tomcat-9.0.80/webapps/
+                   scp game-of-life/gameoflife-web/target/gameoflife.war /mnt/apache-tomcat-9.0.80/webapps/
                 '''
      
              }
