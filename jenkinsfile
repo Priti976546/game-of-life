@@ -1,12 +1,16 @@
-pipeline {
-    agent { node { label ' built-in ' } 
-customWorkspace ' /home/ec2-user ' 
-}
+pipeline{
+    agent{ 
+        node{ 
+            label 'built-in'
+        customWorkspace '/home/ec2-user' 
+		}
+        }
 
    stages {
         stage('checkout') {
             steps {
                sh'''
+			   rm -rf game-of-life
                git clone https://github.com/Priti976546/game-of-life.git
                 cd game-of-life
                '''
@@ -30,4 +34,5 @@ customWorkspace ' /home/ec2-user '
              }
          }
      }
+
 }
